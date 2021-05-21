@@ -75,7 +75,17 @@ class ChatUser {
 
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
+    else if (msg.type === "joke") this.handleJoke(msg)
     else throw new Error(`bad message: ${msg.type}`);
+  }
+
+
+  /** when user asks for (/joke) respond with a random joke */
+
+
+  handleJoke() {
+    let joke = {name: "jokeBOT", type: "chat", text: "WHY did the chicken cross the road??????????"}
+    this.send(JSON.stringify(joke))
   }
 
   /** Connection was closed: leave room, announce exit to others. */

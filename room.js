@@ -63,6 +63,7 @@ class Room {
   broadcast(data) {
     for (let member of this.members) {
       member.send(JSON.stringify(data));
+      console.log("DATA BEING SENT ===>", data)
     }
   }
 }

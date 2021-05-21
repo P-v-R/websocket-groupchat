@@ -24,6 +24,7 @@ ws.onmessage = function (evt) {
   console.log("message", evt);
 
   let msg = JSON.parse(evt.data);
+  console.log("MESSAGE ====> ", msg)
   let item;
 
   if (msg.type === "note") {
@@ -52,14 +53,22 @@ ws.onclose = function (evt) {
 };
 
 
-/** send message when button pushed. */
+/** send message when button pushed. 
+ * if user asks for joke (via typing /joke in the message bar)
+ * ws.send({type:joke})
+*/
 
 $("form").submit(function (evt) {
   evt.preventDefault();
 
-  let data = { type: "chat", text: $("#m").val() };
-  ws.send(JSON.stringify(data));
+  if ($("#m").val() === "/joke") {
+    console.log("user asking for a joke")
+    let joke = { type: "joke" }
+    ws.send(JSON.stringify(joke));
+  } else {
+    let data = { type: "chat", text: $("#m").val() };
+    ws.send(JSON.stringify(data));
+  }
 
   $("#m").val("");
 });
-
