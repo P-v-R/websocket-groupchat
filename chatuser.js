@@ -75,17 +75,28 @@ class ChatUser {
 
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
-    else if (msg.type === "joke") this.handleJoke(msg)
+    else if (msg.type === "joke") this.handleJoke()
+    else if (msg.type === "members") this.handleMembers(msg)
     else throw new Error(`bad message: ${msg.type}`);
   }
 
 
   /** when user asks for (/joke) respond with a random joke */
-
-
   handleJoke() {
     let joke = {name: "jokeBOT", type: "chat", text: "WHY did the chicken cross the road??????????"}
     this.send(JSON.stringify(joke))
+  }
+
+  /** when user asks for (/joke) respond with a random joke */
+  handleMembers() {
+    let members=[];
+    for (let member of this.room.members) {
+      members.push(member.name);
+    }
+    let msg = `In room: ${members.join(', ')}.`;
+
+    let data = {name: "ChatBot", type: "chat", text: msg}
+    this.send(JSON.stringify(data))
   }
 
   /** Connection was closed: leave room, announce exit to others. */

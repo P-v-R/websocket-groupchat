@@ -63,8 +63,15 @@ $("form").submit(function (evt) {
 
   if ($("#m").val() === "/joke") {
     console.log("user asking for a joke")
-    let joke = { type: "joke" }
-    ws.send(JSON.stringify(joke));
+    let data = { type: "joke" }
+    ws.send(JSON.stringify(data));
+  
+  } 
+  if ($("#m").val() === "/members") {
+    console.log("user asking for members in room")
+    let data = { type: "members" }
+    ws.send(JSON.stringify(data));
+  
   } else {
     let data = { type: "chat", text: $("#m").val() };
     ws.send(JSON.stringify(data));
