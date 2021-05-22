@@ -62,16 +62,24 @@ $("form").submit(function (evt) {
   evt.preventDefault();
 
   if ($("#m").val() === "/joke") {
-    console.log("user asking for a joke")
+    console.log("user asking for a joke");
     let data = { type: "joke" }
     ws.send(JSON.stringify(data));
   
   } 
   if ($("#m").val() === "/members") {
-    console.log("user asking for members in room")
+    console.log("user asking for members in room");
     let data = { type: "members" }
     ws.send(JSON.stringify(data));
   
+  }
+  if ($("#m").val().startsWith("/priv")){
+    console.log("user sending private message");
+    let splitData = $("#m").val().split(" ");
+    console.log("split data ==>", splitData)
+    let data = {type: "priv", toUser: splitData[1], msg: splitData.slice(2,splitData.length)}
+    console.log(data)
+    
   } else {
     let data = { type: "chat", text: $("#m").val() };
     ws.send(JSON.stringify(data));
